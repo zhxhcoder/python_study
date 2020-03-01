@@ -63,7 +63,7 @@ def main():
     all_imgs = []
 
     for page in all_pages:
-        url_imgs = get_imgs(page, re.compile(r'//img/.+\.jpg'), "https://www.ivsky.com")
+        url_imgs = get_imgs(page, re.compile(r'/.+\.jpg'), "https://www.ivsky.com")
         all_imgs += url_imgs
 
     all_imgs = list(set(all_imgs))
