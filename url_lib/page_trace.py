@@ -27,7 +27,7 @@ def get_root_page(pageUrl):
     return page_list
 
 
-for i in range(1, 2):
+for i in range(1, 20):
     url = "https://www.ivsky.com/tupian/meinv_t50/index_" + str(i) + ".html"
     print(url)
     print('第%s页抓到%d个大图首页' % (i, len(get_root_page(url))))
