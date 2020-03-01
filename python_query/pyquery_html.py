@@ -1,4 +1,4 @@
-from python_query import PyQuery as pq
+from pyquery import PyQuery as pq
 
 html = """
 <html lang="en">
