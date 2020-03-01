@@ -68,8 +68,25 @@ def main():
 
     all_imgs = list(set(all_imgs))
 
-    for each in all_imgs:
-        print(each)
+    ###################################################
+    imgHeaders = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Cookie': 'JSESSIONID=C5679A406E2621921D0BE71BE1AD0D0C; UM_distinctid=1646dc3e27910d6-0418aa21b7679c-47e1039-1fa400-1646dc3e27a41b; CNZZDATA1265204377=1796871560-1510557120-%7C1510557120; _cnzz_CV1265204377=BrowserInfo%7CChrome%2F67.0.3396.99%7C0',
+        'DNT': '1',
+        'Host': 'www.baidu.com',
+        'Pragma': 'no-cache',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
+    }
+    all_img_list = ["http://www.open-open.com/bbs/uploadImg/20160107/20160107133856_341.jpg"]
+
+    for i in range(len(all_img_list)):
+        path = "/var/pic/" + str(i) + ".jpg"
+        data = urllib.request.urlretrieve(all_img_list[i], path)
 
 
 if __name__ == "__main__":
