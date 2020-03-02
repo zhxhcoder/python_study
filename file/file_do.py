@@ -21,8 +21,37 @@ def add_something(file):
     print('添加\n', file.readable())
 
 
-with open('/Users/xhzh/hello.py', 'rw') as f:
+with open('/Users/xhzh/hello.py', 'w') as f:
     edit_something(f)
 
 with open('/Users/xhzh/hello.py', 'a') as f:
     add_something(f)
+
+print("################建立文件####################")
+
+for i in range(1, 11):
+    oldFileName = "/Users/xhzh/test/hello" + str(i) + ".py"
+    f = open(oldFileName, "w")
+    f.write(oldFileName)
+    print(oldFileName)
+
+print("################建立子件夹####################")
+
+innerDir = "/Users/xhzh/test/inner/"
+if os.path.exists(innerDir):
+    shutil.rmtree(innerDir)  # 空目录、有内容的目录都可以删
+
+os.mkdir(innerDir)
+
+for i in range(1, 11):
+    oldFileName = innerDir + "hi" + str(i) + ".py"
+    f = open(oldFileName, "w")
+    f.write(oldFileName)
+    print(oldFileName)
+
+    newFileName = oldFileName.replace('hi', 're')
+    os.rename(oldFileName,newFileName)
+    print(newFileName)
+
+
+print("################遍历文件####################")
