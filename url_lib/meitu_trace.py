@@ -4,15 +4,15 @@ import urllib
 
 from pyquery import PyQuery as pq
 
-headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36', }
+headers = {
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36', }
 
 
 def get_pages(pageUrl, regex, urlHost):
-
-    print(pageUrl,regex,urlHost) # 输出整个html
+    print(pageUrl, regex, urlHost)  # 输出整个html
 
     res = pq(pageUrl)
-    print(res) # 输出整个html
+    print(res)  # 输出整个html
     href_list = res('a')
     print(href_list)  # 输出所有的<a href="https://www.ivsky.com">天堂图片网</a><a href="/">首页</a>
     page_list = []
