@@ -92,14 +92,8 @@ def main():
 
     all_imgs = list(set(all_imgs))
 
-    ###################################################
-
-    all_img_list = ["https://mtl.gzhuibei.com/images/img/20713/1.jpg",
-                    "https://mtl.gzhuibei.com/images/img/20713/56.jpg"]
-
-    # for i in range(len(all_img_list)):
-    #     path = "/var/pic/" + str(i) + ".jpg"
-    #     data = urllib.request.urlretrieve(all_img_list[i], path)
+    for i in range(len(all_imgs)):
+        DownloadHandler(all_imgs[i]).start()
 
 
 if __name__ == "__main__":
