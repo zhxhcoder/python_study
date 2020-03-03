@@ -1,4 +1,7 @@
+import os
 import re
+from threading import Thread
+
 import requests
 import urllib
 
@@ -6,6 +9,24 @@ from pyquery import PyQuery as pq
 
 headers = {
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36', }
+
+
+class DownloadHandler(Thread):
+
+    def __init__(self, url):
+        super().__init__()
+        self.url = url
+
+    def run(self):
+        filename = self.url[self.url.rfind('/') + 1:]
+        resp = requests.get(self.url)
+
+        imgDir = '/Users/xhzh/pic/'
+        if not os.path.exists(imgDir):
+            os.mkdir(imgDir)
+
+        with open(imgDir + filename, 'wb') as f:
+            f.write(resp.content)
 
 
 def get_pages(pageUrl, regex, urlHost):
@@ -82,4 +103,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    DownloadHandler("https://mtl.gzhuibei.com/images/img/20713/56.jpg").start()
