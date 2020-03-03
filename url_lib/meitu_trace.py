@@ -103,5 +103,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    DownloadHandler("https://mtl.gzhuibei.com/images/img/20713/56.jpg").start()
+    main()
+    # DownloadHandler("https://mtl.gzhuibei.com/images/img/20713/56.jpg").start()
