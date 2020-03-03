@@ -15,7 +15,7 @@ cursor = conn.cursor()
 
 
 # 插入一条记录
-sql = "insert into login (name, password) values (\'love\', \'520520\')"
+sql = "insert into login (name, password) values ('hehe', '222222')"
 cursor.execute(sql)
 
 
