@@ -190,7 +190,7 @@ fd(150)
 seth(-90)
 fd(300)
 color('black')
-write('code by totoup', font=("Arial", 15, "normal"))
+write('code by dudu', font=("Arial", 15, "normal"))
 
 hideturtle()
 done()
