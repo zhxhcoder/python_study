@@ -15,21 +15,20 @@ cursor = conn.cursor()
 
 
 # 插入一条记录
-# sql = "insert into login (name, password) values (\'love\', \'520520')"
-# cursor.execute(sql)
+sql = "insert into login (name, password) values (\'love\', \'520520\')"
+cursor.execute(sql)
 
 
 # 查询一条记录：
-# sql = "select * from login"
-# cursor.execute(sql)
+sql = "select * from login"
+cursor.execute(sql)
 # sql = "select * from login where id=?"
 # cursor.execute(sql, ("2",))
 
 
 # 获取查询结果：
-# values = cursor.fetchall()
-#
-# print(values)
+values = cursor.fetchall()
+print(values)
 
 
 # 通过rowcount获得插入的行数:
