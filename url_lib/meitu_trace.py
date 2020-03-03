@@ -1,14 +1,8 @@
 import os
 import re
 from threading import Thread
-
 import requests
-import urllib
-
 from pyquery import PyQuery as pq
-
-headers = {
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36', }
 
 
 class DownloadHandler(Thread):
@@ -92,18 +86,5 @@ def main():
         DownloadHandler(all_imgs[i]).start()
 
 
-def test():
-    tstUrl = "https://www.meitulu.com/guochan/1.html"
-    resp = requests.get(tstUrl)
-    res = pq(resp.text)
-
-    href_list = res('a')
-    print(href_list)
-
-    pass
-
-
 if __name__ == "__main__":
     main()
-    # test()
-    # DownloadHandler("https://mtl.gzhuibei.com/images/img/20713/56.jpg").start()
