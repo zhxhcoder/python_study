@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from turtle import Turtle, mainloop
+from turtle import Turtle
 from time import clock
 import random
 
@@ -94,5 +94,5 @@ def main():
 if __name__ == "__main__":
     msg = main()
     print(msg)
-    mainloop()
+    tuple.mainloop()
     # 确保不会自动退出
