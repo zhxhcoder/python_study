@@ -1,8 +1,8 @@
 #! /usr/bin/python3
-import pymysql
+import pymsql
 
 # 打卡数据库连接
-db = pymysql.connect("localhost", "testuser", "test123", "TESTDB")
+db = pymsql.connect("localhost", "testuser", "test123", "TESTDB")
 
 # 使用cursor() 方法创建一个游标对象 cursor
 cursor = db.cursor()
