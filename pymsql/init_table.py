@@ -1,7 +1,7 @@
-import pymsql
+import pymysql
 
 # 打开数据库连接
-db = pymsql.connect("localhost", "testuser", "test123", "TESTDB")
+db = pymysql.connect("localhost", "testuser", "test123", "TESTDB")
 
 # 打开cursor()方法创建一个游标对象cursor
 cursor = db.cursor()
