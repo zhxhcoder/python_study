@@ -27,7 +27,7 @@ class DownloadHandler(Thread):
 
 
 def get_pages_url(pageUrl, regex, urlHost):
-    print(pageUrl, regex, urlHost)  # 输出整个html
+    print(pageUrl)  # 输出整个html
     resp = requests.get(pageUrl)
     res = pq(resp.text)
     href_list = res('a')
@@ -66,7 +66,7 @@ def main():
     ###################################################
     all_pages = []
 
-    for i in range(1, 215):
+    for i in range(1, 6):
         url = "https://www.meitulu.com/guochan/" + str(i) + ".html"
         print('第一级页面', url)
 
@@ -93,14 +93,14 @@ def main():
     # 创建游标
     cursor = conn.cursor()
     # 创建表
-    sql_create_table = '''CREATE TABLE `guochan`(
-      `id` INT NOT NULL AUTO_INCREMENT,
-      `url` CHAR(200) ,
-      `time` TIME,
-      PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-    '''
-    cursor.execute(sql_create_table)
+    # sql_create_table = '''CREATE TABLE `guochan`(
+    #   `id` INT NOT NULL AUTO_INCREMENT,
+    #   `url` CHAR(200) ,
+    #   `time` TIME,
+    #   PRIMARY KEY (`id`)
+    # ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+    # '''
+    # cursor.execute(sql_create_table)
 
     sql_insert = "INSERT INTO guochan(url, time) VALUES (%s, %s);"
 
@@ -109,6 +109,9 @@ def main():
             print("imageUrl", all_imgs[i])
             cursor.execute(sql_insert, [all_imgs[i], time.strftime("%Y-%m-%d %H:%M:%S")])
             # DownloadHandler(all_imgs[i]).start()
+
+        conn.commit()
+
     except:
         # 出现错误 就回滚
         conn.rollback()
