@@ -2,12 +2,12 @@
 import pymysql
 
 # 创建连接
-conn = pymysql.connect(host='localhost', port=3306, user='root', password='root', database='db_name', charset='UTF8MB4')
+conn = pymysql.connect(host='localhost', port=3306, user='root', password='root', database='db_zhu', charset='UTF8MB4')
 # 创建游标
 cursor = conn.cursor()
 
 # 创建数据库的sql(如果数据库存在就不创建，防止异常)
-sql_1 = "CREATE DATABASE IF NOT EXISTS db_name"
+sql_1 = "CREATE DATABASE IF NOT EXISTS db_zhu"
 # 执行创建数据库的sql
 cursor.execute(sql_1)
 
