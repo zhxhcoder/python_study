@@ -29,3 +29,7 @@ sql_3 = '''CREATE TABLE `employee`(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 '''
 cursor.execute(sql_3)
+# 关闭光标对象
+cursor.close()
+# 关闭数据库连接
+conn.close()
