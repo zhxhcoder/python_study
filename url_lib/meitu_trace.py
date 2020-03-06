@@ -1,6 +1,9 @@
 import os
 import re
+import time
 from threading import Thread
+
+import pymysql
 import requests
 from pyquery import PyQuery as pq
 
@@ -63,7 +66,7 @@ def main():
     ###################################################
     all_pages = []
 
-    for i in range(1, 2):
+    for i in range(1, 215):
         url = "https://www.meitulu.com/guochan/" + str(i) + ".html"
         print('第一级页面', url)
 
@@ -82,8 +85,38 @@ def main():
 
     all_imgs = list(set(all_imgs))
 
-    for i in range(len(all_imgs)):
-        DownloadHandler(all_imgs[i]).start()
+    ###################################################
+
+    # 创建连接
+    conn = pymysql.connect(host='localhost', port=3306, user='root', password='root', database='db_zhu',
+                           charset='UTF8MB4')
+    # 创建游标
+    cursor = conn.cursor()
+    # 创建表
+    sql_create_table = '''CREATE TABLE `guochan`(
+      `id` INT NOT NULL AUTO_INCREMENT,
+      `url` CHAR(200) ,
+      `time` TIME,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+    '''
+    cursor.execute(sql_create_table)
+
+    sql_insert = "INSERT INTO guochan(url, time) VALUES (%s, %s);"
+
+    try:
+        for i in range(len(all_imgs)):
+            print("imageUrl", all_imgs[i])
+            cursor.execute(sql_insert, [all_imgs[i], time.strftime("%Y-%m-%d %H:%M:%S")])
+            # DownloadHandler(all_imgs[i]).start()
+    except:
+        # 出现错误 就回滚
+        conn.rollback()
+
+    # 关闭光标对象
+    cursor.close()
+    # 关闭数据库连接
+    conn.close()
 
 
 if __name__ == "__main__":
