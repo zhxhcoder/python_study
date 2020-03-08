@@ -1,7 +1,7 @@
 import os
 import shutil
 
-print(os.getcwd())  # /usr/local/bin/python3.8 /Users/xhzh/yxFiles/pythonProj/python_study/file/file_do.py
+print(os.getcwd())  # /usr/local/bin/python3.8 /Users/xhzh/yxFiles/pythonProj/python_study/pyfile/file_do.py
 
 
 def edit_something(file):
