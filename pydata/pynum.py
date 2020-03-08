@@ -38,3 +38,28 @@ def status(x):
 
 df = pd.DataFrame(status(d1))
 print(df)
+print("########################加载CSV数据####################")
+
+bank = pd.read_csv("/data/bank-additional-train.csv")
+bank.head()  # 查看前5行
+
+print("########################多表连接####################")
+student = {'Name': ['Bob', 'Alice', 'Carol', 'Henry', 'Judy', 'Robert', 'William'],
+           'Age': [12, 16, 13, 11, 14, 15, 24],
+           'Sex': ['M', 'F', 'M', 'M', 'F', 'M', 'F']}
+
+score = {'Name': ['Bob', 'Alice', 'Carol', 'Henry', 'William'],
+         'Score': [75, 35, 87, 86, 57]}
+
+df_student = pd.DataFrame(student)
+print(df_student)
+
+df_score = pd.DataFrame(score)
+print(df_score)
+
+# 内连接
+stu_score1 = pd.merge(df_student, df_score, on='Name')
+print(stu_score1)
+# 左连接
+stu_score2 = pd.merge(df_student, df_score, on='Name', how='left')
+print(stu_score2)
