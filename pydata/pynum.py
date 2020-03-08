@@ -25,4 +25,16 @@ d1.std()  # 标准差
 d1.mad()  # 平均绝对偏差
 d1.skew()  # 偏度
 d1.kurt()  # 峰度
-d1.describe()  # 一次性输出多个描述性统计指标
+print(d1.describe())  # 一次性输出多个描述性统计指标
+
+
+def status(x):
+    return pd.Series([x.count(), x.min(), x.idxmin(), x.quantile(.25), x.median(),
+                      x.quantile(.75), x.mean(), x.max(), x.idxmax(), x.mad(), x.var(),
+                      x.std(), x.skew(), x.kurt()], index=['总数', '最小值', '最小值位置', '25%分位数',
+                                                           '中位数', '75%分位数', '均值', '最大值', '最大值位数', '平均绝对偏差', '方差', '标准差',
+                                                           '偏度', '峰度'])
+
+
+df = pd.DataFrame(status(d1))
+print(df)
