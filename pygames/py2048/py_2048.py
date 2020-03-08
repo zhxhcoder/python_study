@@ -1,7 +1,8 @@
-import wx
+import copy
 import os
 import random
-import copy
+
+import wx
 
 
 # creating the user interface frame that the user will interact with and perform actions that will have an appropriate response
@@ -62,8 +63,11 @@ class Frame(wx.Frame):
 
     #   putting icon on toolbar
     def setIcon(self):
-        icon = wx.Icon("icon.ico", wx.BITMAP_TYPE_ICO)
-        self.SetIcon(icon)
+        try:
+            icon = wx.Icon("icon.ico", wx.BITMAP_TYPE_ICO)
+            self.SetIcon(icon)
+        except:
+            pass
 
     # Opens previous game and loads and updates score
     def loadScore(self):
@@ -314,5 +318,5 @@ class Frame(wx.Frame):
 
 if __name__ == "__main__":
     app = wx.App()
-    Frame(u"2048 v1.0.1 by Guolz")
+    Frame(u"2048 v1.0.1 by dudu")
     app.MainLoop()
