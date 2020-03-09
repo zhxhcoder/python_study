@@ -1,6 +1,6 @@
 import os
 
-# 删除大小一样的文件
+# 删除大小一样的文件 问题类似于LeetCode26
 
 fileDir = '/Users/xhzh/fileDo/jpg1'
 
