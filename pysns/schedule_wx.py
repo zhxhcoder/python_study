@@ -32,8 +32,7 @@ def exitCallback():
 
 itchat.auto_login(hotReload=True, enableCmdQR=True, loginCallback=loginCallback, exitCallback=exitCallback)
 workbook = xlrd.open_workbook(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), "chatroomsfile\AutoSentChatroom.xlsx"))
-# workbook = xlrd.open_workbook("D:\PyCharmCode\AutoLiulishouWechat\chatroomsfile\AutoSentChatroom.xlsx")
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "chatfile\AutoSent.xlsx"))
 sheet = workbook.sheet_by_name('Chatrooms')
 iRows = sheet.nrows
 
