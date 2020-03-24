@@ -92,3 +92,7 @@ def do_something(delay):
     print('函数do_something开始')
     time.sleep(delay)
     print('函数do_something结束')
+
+
+if __name__ == "__main__":
+    do_something(100)
