@@ -50,8 +50,8 @@ for i in range(1, 11):
     print(oldFileName)
 
     newFileName = oldFileName.replace('hi', 're')
-    os.rename(oldFileName,newFileName)
+    os.rename(oldFileName, newFileName)
     print(newFileName)
 
-
 print("################遍历文件####################")
+
