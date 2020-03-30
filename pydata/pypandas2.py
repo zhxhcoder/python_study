@@ -13,3 +13,7 @@ print(stock_data[["high", "close"]])
 sdata = {"open": 3246, "high": 3245, "low": 3299, "close": 3245}
 ret = pd.Series(sdata)
 print(ret)
+
+data = {"open": [3245, 3246, 3247], "high": [3255, 3256, 3257]}
+frame = pd.DataFrame(data)
+print(frame)
