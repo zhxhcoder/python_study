@@ -218,7 +218,7 @@ class GradleInfo:
 
 
 if __name__ == '__main__':
-    start = time.clock()
+    start = time.perf_counter()
     gradleinfo = get_gradle_info(sys.argv[1])
     # 先删除可能存在的以前打的包
     remove_apk(gradleinfo.get_apk_path())
@@ -249,6 +249,6 @@ if __name__ == '__main__':
         print('')
         print('')
         print('build package:' + str(len(channel_list)))
-        print('build time: %f s' % (time.clock() - start))
+        print('build time: %f s' % (time.perf_counter() - start))
     else:
         build_package(sys.argv[2], gradleinfo)
