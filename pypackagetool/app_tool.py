@@ -128,4 +128,3 @@ if __name__ == '__main__':
         print('build time: %f s' % (time.clock() - start))
     else:
         build_package(sys.argv[2], gradleinfo)
-
