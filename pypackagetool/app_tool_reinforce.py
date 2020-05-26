@@ -82,7 +82,7 @@ def process_cmd_bat(cmd):
 # 执行shell脚本
 def process_shell(cmd):
 	output = os.popen(cmd)
-	print output.read()
+	print(output.read())
 
 
 # 根据渠道号重新打包
@@ -129,8 +129,8 @@ def request_url(url, params):
 	cookies = cookielib.CookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookies), MultipartPostHandler.MultipartPostHandler)
 	try:
-		print 'request url:' + url
-		print 'request params:' + str(params)
+		print('request url:' + url)
+		print('request params:' + str(params))
 		response = opener.open(url, params)
 		return response.read()
 	except Exception as e:
@@ -165,7 +165,7 @@ def download_apk(url, upload_result, apkpath):
 				# 隔断时间查询一次
 				time.sleep(query_time)
 			else:
-				print 'download error; state:' + str(dowanload_result_json['state'])
+				print('download error; state:' + str(dowanload_result_json['state']))
 				if_download = False
 		else:
 			out = open(apkpath, 'w')
@@ -207,7 +207,7 @@ if __name__ == '__main__':
 	process_shell(gradleinfo.get_gradle_cmd())
 	# 上传包
 	upload_result = upload_file(url_batch_apk_reinforce, gradleinfo.get_apk_name() + 'Origin.apk')
-	print 'upload_apk_result:' + str(upload_result)
+	print ('upload_apk_result:' + str(upload_result))
 	# 下载加固包
 	download_apk(url_batch_apk_download, upload_result, gradleinfo.get_apk_name() + reinforce_unsigned_apk_name)
 	# 签名
