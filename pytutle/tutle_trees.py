@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from turtle import Turtle
-from time import clock
 import random
+from time import clock
+from turtle import Turtle
 
 
 def tree(plist, l, a, f):

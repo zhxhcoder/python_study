@@ -18,7 +18,6 @@ cursor = conn.cursor()
 sql = "insert into login (name, password) values ('hehe', '222222')"
 cursor.execute(sql)
 
-
 # 查询一条记录：
 sql = "select * from login"
 cursor.execute(sql)
@@ -29,7 +28,6 @@ cursor.execute(sql)
 # 获取查询结果：
 values = cursor.fetchall()
 print(values)
-
 
 # 通过rowcount获得插入的行数:
 # cursor.rowcount()

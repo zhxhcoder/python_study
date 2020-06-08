@@ -1,5 +1,5 @@
-from turtle import *
 import time
+from turtle import *
 
 
 def nose(x, y):  # 鼻子

@@ -9,4 +9,3 @@ message = client.messages.create(
     to="+86xxxxxxxxxxx,替换成注册的手机号，也就是要接收短信的手机号，中国区是+86",
     from_="+15017250604，替换成你的twilio phone number，twilio分配给你的",
     body="Hello from Python Twilio!")
-

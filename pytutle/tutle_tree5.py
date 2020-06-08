@@ -1,15 +1,16 @@
-from turtle import *
 from random import *
+from turtle import *
+
 
 # 画树方法
 def drawTree(n, l):
     pendown()
     pencolor('#5d3c3c')
-    pensize( n / 1.5)
+    pensize(n / 1.5)
     forward(l)
     if n > 0:
         dr = randint(30, 40)
-        dl =  randint(30, 40)
+        dl = randint(30, 40)
         move = l * (random() * 0.4 + 0.5)
         right(dr)
         drawTree(n - 1, move)
@@ -20,6 +21,7 @@ def drawTree(n, l):
         drawPetal(3)
     penup()
     backward(l)
+
 
 # 花瓣位置生成
 def petalPlace(m, x, y):
@@ -43,6 +45,7 @@ def petalPlace(m, x, y):
             pendown()
             drawPetal(5)
 
+
 # 花朵绘画方法
 def drawPetal(n):
     colormode(255)
@@ -55,6 +58,7 @@ def drawPetal(n):
     circle(n)
     end_fill()
 
+
 # 启动方法
 def run():
     setup(1.0, 1.0)
@@ -66,6 +70,7 @@ def run():
     tracer(False)
     drawTree(13, 150)
     petalPlace(160, -100, -150)
+
 
 run()
 done()

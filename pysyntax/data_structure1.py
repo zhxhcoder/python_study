@@ -10,5 +10,3 @@ for a in t:
 l = [3, 4, 'haha']
 
 print(l)
-
-

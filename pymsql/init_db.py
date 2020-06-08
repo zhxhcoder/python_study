@@ -27,7 +27,7 @@ sql_insert = "INSERT INTO users(name, time) VALUES (%s, %s);"
 try:
     # 执行sql语句
     cursor.execute(sql_insert, [name, mTime])
-    cursor.execute(sql_insert, [name+name, mTime])
+    cursor.execute(sql_insert, [name + name, mTime])
     # 提交到数据库执行
     conn.commit()
 except:

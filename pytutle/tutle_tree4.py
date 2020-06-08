@@ -1,6 +1,6 @@
-from turtle import *
-from random import *
 from math import *
+from random import *
+from turtle import *
 
 
 def tree(n, l):

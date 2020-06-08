@@ -1,10 +1,12 @@
 import os
+import random
 import sys
 import time
-import random
+
 from PyQt5 import QtWidgets
-from pytyping.ui import Ui_Form
+
 from pytyping.crawl import crawl_main
+from pytyping.ui import Ui_Form
 
 
 class MyForm(Ui_Form, QtWidgets.QWidget):
@@ -30,7 +32,7 @@ class MyForm(Ui_Form, QtWidgets.QWidget):
     def get_time(self):
         # 计算时间
         end_time = time.time()
-        cost_time = "%.2f"%(end_time - self.start_time)
+        cost_time = "%.2f" % (end_time - self.start_time)
         self.time_label.setText("本次打字花费：{}s".format(cost_time))
 
     def click(self):

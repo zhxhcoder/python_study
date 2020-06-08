@@ -38,5 +38,5 @@ print(regex1.search(str1).group())
 print("###############################################")
 
 url = "https://mtl.gzhuibei.com/images/img/3273/1.jpg"
-finalU = re.sub(r'https.+img', "",url)
-print(finalU.replace('/',''))
+finalU = re.sub(r'https.+img', "", url)
+print(finalU.replace('/', ''))

@@ -1,7 +1,6 @@
-import turtle
 import random
+import turtle
 from turtle import *
-from time import sleep
 
 t = turtle.Turtle()
 w = turtle.Screen()
