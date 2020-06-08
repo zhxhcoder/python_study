@@ -64,9 +64,9 @@ reinforce_unsigned_apk_name = 'Unsigned.apk'
 reinforce_signed_apk_name = 'Signed.apk'
 reinforce_complete_apk_name = 'Complete.apk'
 # 签名
-keystore_path = project_path + 'app/creditwealth.dat'
-keystore_password = '123456'
-keyalias = 'creditwealth'
+keystore_path = project_path + ''
+keystore_password = ''
+keyalias = ''
 jarsigner_path = '/opt/yrd_soft/java/bin/'
 zipalign_path = '/opt/build_tools/android-sdk-linux/build-tools/23.0.2/'
 
