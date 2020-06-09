@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 
@@ -8,7 +10,7 @@ recordMap = {}
 
 
 def get_record_list():
-    return [x.json() for x in recordMap.values()]
+    return json.dumps(recordMap.values(), ensure_ascii=False)
 
 
 class ApiRecord:
