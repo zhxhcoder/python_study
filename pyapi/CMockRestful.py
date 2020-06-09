@@ -7,13 +7,17 @@ api = Api(app)
 recordMap = {}
 
 
+def get_record_list():
+    return recordMap.values()
+
+
 class ApiRecord:
     def __init__(self, path, resp_data, show_type):
         self.path = path
         self.resp_data = resp_data
         self.show_type = show_type
 
-    def show_resp(self):
+    def resp_show(self):
         if self.show_type == "1":
             return self.resp_data
 
@@ -39,11 +43,11 @@ parser.add_argument('show_type')
 class Api(Resource):
     def get(self, path):
         abort_if_path_not_exist(path)
-        return recordMap[path]
+        return recordMap[path].resp_show()
 
     def post(self, path):
         abort_if_path_not_exist(path)
-        return recordMap[path]
+        return recordMap[path].resp_show()
 
     def delete(self, path):
         abort_if_path_not_exist(path)
@@ -60,7 +64,7 @@ class Api(Resource):
 
 class ApiList(Resource):
     def get(self):
-        return recordMap
+        return get_record_list
 
     def post(self):
         args = parser.parse_args()
@@ -68,7 +72,7 @@ class ApiList(Resource):
         resp_data = args['resp_data']
         show_type = args['show_type']
         recordMap[path] = ApiRecord(path, resp_data, show_type)
-        return recordMap[path], 201
+        return recordMap[path].resp_show(), 201
 
 
 api.add_resource(ApiList, '/api/records')
