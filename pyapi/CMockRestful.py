@@ -27,7 +27,7 @@ class ApiRecord:
 
 def abort_if_path_not_exist(path):
     if path not in recordMap:
-        abort(404, message="{} doesn't exist".format(path.replace("__", "/")))
+        abort(404, message="{} does not exist".format(path.replace("__", "/")))
 
 
 def redirect_if_path_is_special(path):
