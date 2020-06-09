@@ -4,15 +4,22 @@ from flask_restful import reqparse, abort, Api, Resource
 app = Flask(__name__)
 api = Api(app)
 
-RESULTS = {
-    'todo__no1': '11111',
-    'todo__no2': '22222',
-    'todo__no3': '33333',
-}
+recordMap = {}
+
+
+class ApiRecord:
+    def __init__(self, path, resp_data, show_type):
+        self.path = path
+        self.resp_data = resp_data
+        self.show_type = show_type
+
+    def show_resp(self):
+        if self.show_type == "1":
+            return self.resp_data
 
 
 def abort_if_path_not_exist(path):
-    if path not in RESULTS:
+    if path not in recordMap:
         abort(404, message="{} doesn't exist".format(path.replace("__", "/")))
 
 
@@ -25,38 +32,43 @@ def redirect_if_path_is_special(path):
 
 parser = reqparse.RequestParser()
 parser.add_argument('path')
-parser.add_argument('resp')
+parser.add_argument('resp_data')
+parser.add_argument('show_type')
 
 
 class Api(Resource):
     def get(self, path):
         abort_if_path_not_exist(path)
-        return RESULTS[path]
+        return recordMap[path]
 
     def post(self, path):
         abort_if_path_not_exist(path)
-        return RESULTS[path]
+        return recordMap[path]
 
     def delete(self, path):
         abort_if_path_not_exist(path)
-        del RESULTS[path]
+        del recordMap[path]
         return {'status': "deleted"}, 204
 
     def put(self, path):
         args = parser.parse_args()
-        RESULTS[path] = args['resp']
+        resp_data = args['resp_data']
+        show_type = args['show_type']
+        recordMap[path] = ApiRecord(path, resp_data, show_type)
         return {'status': "added"}, 201
 
 
 class ApiList(Resource):
     def get(self):
-        return RESULTS
+        return recordMap
 
     def post(self):
         args = parser.parse_args()
         path = args['path']
-        RESULTS[path] = args['resp']
-        return RESULTS[path], 201
+        resp_data = args['resp_data']
+        show_type = args['show_type']
+        recordMap[path] = ApiRecord(path, resp_data, show_type)
+        return recordMap[path], 201
 
 
 api.add_resource(ApiList, '/api/records')
