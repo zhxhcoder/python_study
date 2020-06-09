@@ -8,7 +8,7 @@ recordMap = {}
 
 
 def get_record_list():
-    return recordMap.values()
+    return [x.json() for x in recordMap.values()]
 
 
 class ApiRecord:
@@ -16,6 +16,9 @@ class ApiRecord:
         self.path = path
         self.resp_data = resp_data
         self.show_type = show_type
+
+    def json(self):
+        {"path": self.path, "resp_data": self.resp_data, "show_type": self.show_type}
 
     def resp_show(self):
         if self.show_type == "1":
