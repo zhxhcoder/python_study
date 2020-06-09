@@ -18,7 +18,7 @@ class ApiRecord:
         self.show_type = show_type
 
     def json(self):
-        {"path": self.path, "resp_data": self.resp_data, "show_type": self.show_type}
+        return {"path": self.path, "resp_data": self.resp_data, "show_type": self.show_type}
 
     def resp_show(self):
         if self.show_type == "1":
