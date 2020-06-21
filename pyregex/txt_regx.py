@@ -40,3 +40,19 @@ print("###############################################")
 url = "https://mtl.gzhuibei.com/images/img/3273/1.jpg"
 finalU = re.sub(r'https.+img', "", url)
 print(finalU.replace('/', ''))
+
+print("###############################################")
+
+showType = "1"
+ss = "" if showType is None else showType
+
+ss = re.sub(r'\s+', '', ss)
+
+if ss is None:
+    print('->none')
+elif ss in {"1", "0", "-1"}:
+    print("->" + "set"+ss)
+elif ss != '':
+    print("->" + ss)
+else:
+    print('->空')
