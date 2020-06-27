@@ -1,5 +1,6 @@
 import os
 import shutil
+
 from tqdm import tqdm
 
 
@@ -29,7 +30,9 @@ def searchFile():
 
     path_list = os.listdir(src_dir)
     for new_path in path_list:
-        print("-目录->" + new_path)
+        new_path = os.path.join(src_dir, new_path)
+        if os.path.isdir(new_path):
+            print("-目录->" + new_path)
 
     # 建立目标目录
     if not os.path.exists(dst_dir):
