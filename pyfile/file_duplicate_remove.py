@@ -14,26 +14,37 @@ def is_same_file(file1, file2):
     return False
 
 
+# get_file_hash获得文件的主键
+def get_file_hash(file):
+    file_info = os.stat(file)
+    return file_info.st_size.__str__() + "-" + get_time_second(file_info.st_ctime).replace(" ", "-")
+
+
 def get_time_second(timestamp):
     return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
 
 def strip_duplicate_file():
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/picTest")
-
-    index = 0
+    file_set = set()
     if os.path.exists(src_dir):
         # root 所指的是当前正在遍历的这个文件夹的本身的地址
         # dirs 是一个 list，内容是该文件夹中所有的目录的名字(不包括子目录)
         # files 同样是 list, 内容是该文件夹中所有的文件(不包括子目录)
         for root, dirs, files in os.walk(src_dir):
-            for i, file in enumerate(tqdm(files)):
-                index = index + 1
+            for file in tqdm(files):
                 src_file = os.path.join(root, file)
-                fileInfo = os.stat(src_file)
-                print(index.__str__() + "--->" + file
-                      + " 大小：" + fileInfo.st_size.__str__()
-                      + " 创建时间：" + get_time_second(fileInfo.st_ctime).__str__())
+                file_hash = get_file_hash(src_file)
+
+                if file_hash in file_set:
+                    os.remove(src_file)
+
+                file_set.add(file_hash)
+
+                print("--->" + file
+                      + "--->" + file_hash)
+
+    print(file_set)
 
 
 if __name__ == "__main__":
