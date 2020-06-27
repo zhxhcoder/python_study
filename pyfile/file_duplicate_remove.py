@@ -1,53 +1,38 @@
+import datetime
 import os
-import re
-import shutil
 
 from tqdm import tqdm
 
 
-# 为了将移动硬盘数据恢复的文件，重新整理去重，对大小一样，日期一样的文件只保留一个
-def searchFile():
-    # 规范化绝对路径
-    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/cpyTest")
-
-    path_list = os.listdir(src_dir)
-    for path in path_list:
-        new_path = os.path.join(src_dir, path)
-        if os.path.isdir(new_path):
-            # 源文件目录作为新的gif名
-            print("-源文件目录->" + new_path)
-            copyRenameFile(path, new_path)
+# 如果大小一样且，创建时间是在同一分钟
+def is_same_file(file_info1, file_info2):
+    if file_info1.st_size == file_info2.st_size and get_time_second(file_info1.st_ctime) == get_time_second(
+            file_info2.st_ctime):
+        return True
+    return False
 
 
-def copyRenameFile(new_file_name, newSrcDir):
-    src_dir = os.path.abspath(newSrcDir)
-    dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/leetcodeGif")
+def get_time_second(timestamp):
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def strip_duplicate_file():
+    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/picTest")
 
     index = 0
-    # 建立目标目录
-    if not os.path.exists(dst_dir):
-        os.makedirs(dst_dir)
-
     if os.path.exists(src_dir):
         # root 所指的是当前正在遍历的这个文件夹的本身的地址
         # dirs 是一个 list，内容是该文件夹中所有的目录的名字(不包括子目录)
         # files 同样是 list, 内容是该文件夹中所有的文件(不包括子目录)
         for root, dirs, files in os.walk(src_dir):
             for i, file in enumerate(tqdm(files)):
-                if re.search(r'\.gif$', file) is not None:
-                    if index == 0:
-                        newFile = new_file_name + ".gif"
-                    else:
-                        newFile = new_file_name + index.__str__() + ".gif"
-
-                    src_file = os.path.join(root, file)
-                    new_file = os.path.join(dst_dir, newFile)
-
-                    print(new_file)
-
-                    shutil.copy(src_file, new_file)
-                    index = index + 1
+                index = index + 1
+                src_file = os.path.join(root, file)
+                fileInfo = os.stat(src_file)
+                print(index.__str__() + "--->" + file
+                      + " 大小：" + fileInfo.st_size.__str__()
+                      + " 创建时间：" + get_time_second(fileInfo.st_ctime).__str__())
 
 
 if __name__ == "__main__":
-    searchFile()
+    strip_duplicate_file()
