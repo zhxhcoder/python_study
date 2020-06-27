@@ -5,6 +5,7 @@ import shutil
 from tqdm import tqdm
 
 
+# 为了将移动硬盘数据恢复的文件，重新整理去重，对大小一样，日期一样的文件只保留一个
 def searchFile():
     # 规范化绝对路径
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/cpyTest")
