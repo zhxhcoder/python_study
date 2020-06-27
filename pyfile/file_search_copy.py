@@ -26,13 +26,18 @@ def copy_file(path, Target_area):  # 传入需要遍历的根目录和需要复�
 def searchFile():
     # 规范化绝对路径
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/cpyTest")
-    dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/leetcodeGif")
 
     path_list = os.listdir(src_dir)
     for new_path in path_list:
         new_path = os.path.join(src_dir, new_path)
         if os.path.isdir(new_path):
-            print("-目录->" + new_path)
+            copyRenameFile(new_path)
+            print("-源文件目录->" + new_path)
+
+
+def copyRenameFile(newSrcDir):
+    src_dir = os.path.abspath(newSrcDir)
+    dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/leetcodeGif")
 
     # 建立目标目录
     if not os.path.exists(dst_dir):
@@ -47,8 +52,6 @@ def searchFile():
                 src_file = os.path.join(root, file)
                 shutil.copy(src_file, dst_dir)
                 print("***" + src_file)
-
-    print('congratulations！')
 
 
 if __name__ == "__main__":
