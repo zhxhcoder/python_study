@@ -32,15 +32,14 @@ def searchFile():
     for path in path_list:
         new_path = os.path.join(src_dir, path)
         if os.path.isdir(new_path):
-            copyRenameFile(new_path)
+            copyRenameFile(path, new_path)
             print("-源文件目录->" + new_path)
 
 
-def copyRenameFile(newSrcDir):
+def copyRenameFile(new_file_name, newSrcDir):
     src_dir = os.path.abspath(newSrcDir)
     dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/leetcodeGif")
 
-    new_file_name = newSrcDir
     index = 0
     # 建立目标目录
     if not os.path.exists(dst_dir):
@@ -58,9 +57,11 @@ def copyRenameFile(newSrcDir):
                     else:
                         newFile = new_file_name + index.__str__() + ".gif"
 
-                    print(newFile)
-
                     src_file = os.path.join(root, file)
+                    new_file = os.path.join(dst_dir, newFile)
+
+                    print(new_file)
+
                     shutil.copy(src_file, dst_dir)
                     index = index + 1
 
