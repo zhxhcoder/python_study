@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 
 from tqdm import tqdm
@@ -49,9 +50,11 @@ def copyRenameFile(newSrcDir):
         # files 同样是 list, 内容是该文件夹中所有的文件(不包括子目录)
         for root, dirs, files in os.walk(src_dir):
             for file in tqdm(files):
-                src_file = os.path.join(root, file)
-                shutil.copy(src_file, dst_dir)
-                print("***" + src_file)
+
+                if re.search(r'\.gif$', file) is not None:
+                    src_file = os.path.join(root, file)
+                    shutil.copy(src_file, dst_dir)
+                    print("-->" + src_file)
 
 
 if __name__ == "__main__":
