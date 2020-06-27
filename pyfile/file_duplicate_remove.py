@@ -17,15 +17,15 @@ def is_same_file(file1, file2):
 # get_file_hash获得文件的主键
 def get_file_hash(file):
     file_info = os.stat(file)
-    return file_info.st_size.__str__() + "-" + get_time_second(file_info.st_ctime).replace(" ", "-")
+    return file_info.st_size.__str__() + "/" + get_time_second(file_info.st_ctime)
 
 
 def get_time_second(timestamp):
-    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d/%H:%M:%S')
 
 
 def strip_duplicate_file():
-    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/picTest")
+    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/_分类备份/照片/jpg")
     file_set = set()
     if os.path.exists(src_dir):
         # root 所指的是当前正在遍历的这个文件夹的本身的地址
