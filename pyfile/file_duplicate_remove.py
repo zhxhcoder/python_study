@@ -5,7 +5,9 @@ from tqdm import tqdm
 
 
 # 如果大小一样且，创建时间是在同一分钟
-def is_same_file(file_info1, file_info2):
+def is_same_file(file1, file2):
+    file_info1 = os.stat(file1)
+    file_info2 = os.stat(file2)
     if file_info1.st_size == file_info2.st_size and get_time_second(file_info1.st_ctime) == get_time_second(
             file_info2.st_ctime):
         return True
