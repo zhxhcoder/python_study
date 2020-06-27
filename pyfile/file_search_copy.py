@@ -5,25 +5,6 @@ import shutil
 from tqdm import tqdm
 
 
-def copy_file(path, Target_area):  # 传入需要遍历的根目录和需要复制到的区域
-    global Suffix_name
-    path_list = os.listdir(path)
-    for new_path in path_list:
-        new_path = os.path.join(path, new_path)
-        if os.path.isdir(new_path):
-            copy_file(new_path, Target_area)
-            print("目录")
-        elif os.path.isfile(new_path):
-            Suffix_name = os.path.splitext(new_path)[1]
-        if Suffix_name in [".bmp", ".gif", ".png", ".jpg"]:  # 指定文件后缀名，从而指定文件格式
-            shutil.copy(new_path, Target_area)
-            print("文件")
-        else:
-            print("there is sth wrong")
-
-        copy_file(path, Target_area)
-
-
 def searchFile():
     # 规范化绝对路径
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/cpyTest")
@@ -32,8 +13,9 @@ def searchFile():
     for path in path_list:
         new_path = os.path.join(src_dir, path)
         if os.path.isdir(new_path):
-            copyRenameFile(path, new_path)
+            # 源文件目录作为新的gif名
             print("-源文件目录->" + new_path)
+            copyRenameFile(path, new_path)
 
 
 def copyRenameFile(new_file_name, newSrcDir):
@@ -62,7 +44,7 @@ def copyRenameFile(new_file_name, newSrcDir):
 
                     print(new_file)
 
-                    shutil.copy(src_file, dst_dir)
+                    shutil.copy(src_file, new_file)
                     index = index + 1
 
 
