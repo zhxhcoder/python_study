@@ -24,12 +24,16 @@ def copy_file(path, Target_area):  # 传入需要遍历的根目录和需要复�
 
 def searchFile():
     # 规范化绝对路径
-    src_dir = os.path.abspath(r"I:\ADNI_DeepLearning\ADNI1 Annual 2 Yr 3T\MCI")
-    dst_dir = os.path.abspath(r"I:\ADNI_DeepLearning_Copy\MCI")
+    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/cpyTest")
+    dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/leetcodeGif")
 
+    path_list = os.listdir(src_dir)
+    for new_path in path_list:
+        print("-目录->" + new_path)
+
+    # 建立目标目录
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
-        # print("fistr_dir is:\t{}".format(fistr_dir))
 
     if os.path.exists(src_dir):
         # root 所指的是当前正在遍历的这个文件夹的本身的地址
@@ -39,11 +43,10 @@ def searchFile():
             for file in tqdm(files):
                 src_file = os.path.join(root, file)
                 shutil.copy(src_file, dst_dir)
-                print(src_file)
+                print("***" + src_file)
 
     print('congratulations！')
 
 
 if __name__ == "__main__":
-    copy_file(r"/Users/xhzh/yxFiles/_pic/cpyTest",
-              r"/Users/xhzh/yxFiles/_pic/leetcodeGif")
+    searchFile()
