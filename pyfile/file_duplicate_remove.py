@@ -1,5 +1,6 @@
 import datetime
 import os
+import shutil
 
 from tqdm import tqdm
 
@@ -25,7 +26,13 @@ def get_time_second(timestamp):
 
 
 def strip_duplicate_file():
-    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/_分类备份/照片/jpg")
+    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/picTest")
+
+    dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/duplicate")
+    # 建立目标目录
+    if not os.path.exists(dst_dir):
+        os.makedirs(dst_dir)
+
     file_set = set()
     file_num = 0
     del_num = 0
@@ -41,14 +48,15 @@ def strip_duplicate_file():
 
                 if file_hash in file_set:
                     del_num = del_num + 1
-                    os.remove(src_file)
+                    shutil.move(src_file, dst_dir)
+                    # os.remove(src_file)
 
                 file_set.add(file_hash)
 
                 print("--->" + file
                       + "--->" + file_hash)
 
-    print("文件个数", file_num, "删除个数", del_num)
+    print("文件个数", file_num, "删除文件", del_num)
 
 
 if __name__ == "__main__":
