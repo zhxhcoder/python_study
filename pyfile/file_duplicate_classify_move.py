@@ -16,7 +16,7 @@ def get_pic_hash(file, hasExif):
     # 获取长宽
     try:
         img = Image.open(file)
-        img_size = img.size.__str__
+        img_size = img.size.__str__()
     except:
         img_size = '(img_size)'
 
@@ -48,14 +48,8 @@ def get_pic_hash(file, hasExif):
         return file_info.st_size.__str__() + "/" + img_size + "/" + get_date(file_info.st_ctime)
 
 
-def strip_duplicate_pic():
-    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/_分类备份")
-    month_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/_时间备份/monthDel")
+def strip_duplicate_pic(src_dir):
     phone_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/_时间备份/phoneDel")
-
-    # 建立目标目录
-    if not os.path.exists(month_dir):
-        os.makedirs(month_dir)
 
     # 建立目标目录
     if not os.path.exists(phone_dir):
@@ -93,7 +87,8 @@ def strip_duplicate_pic():
                     if file_hash in file_set:
                         del_num = del_num + 1
                         if hasExif:
-                            shutil.move(src_file, month_dir)
+                            # 删除hasExif图片
+                            os.remove(src_file)
                         else:
                             shutil.move(src_file, phone_dir)
 
@@ -103,8 +98,7 @@ def strip_duplicate_pic():
     print("图片个数", file_num, "去重图片", del_num)
 
 
-def classify_pic_by_time():
-    src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/_分类备份")
+def classify_pic_by_time(src_dir):
     month_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/_时间备份/monthPic")
     phone_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/_时间备份/phonePic")
 
@@ -186,5 +180,6 @@ def classify_pic_by_time():
 
 
 if __name__ == "__main__":
-    strip_duplicate_pic()
-    classify_pic_by_time()
+    srcDir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/_分类备份")
+    strip_duplicate_pic(srcDir)
+    classify_pic_by_time(srcDir)
