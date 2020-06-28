@@ -15,7 +15,7 @@ def classify_pic_by_exif():
 
     file_num = 0
     pic_num = 0
-    ignore_num = 0
+    classify_num = 0
     if os.path.exists(src_dir):
         for root, dirs, files in os.walk(src_dir):
             for file in tqdm(files):
@@ -38,23 +38,27 @@ def classify_pic_by_exif():
                         originalTime = None
 
                     if time is not None or originalTime is not None:
+                        classify_num = classify_num + 1
                         # 只处理能获取到拍摄时间的文件
-                        date_path = str_time[0:10].replace(":", "-")
+                        date_path = str_time[0:10].replace(":", "")
                         date_dir = os.path.join(dst_dir, date_path)
                         # 按日期建立目录
                         if not os.path.exists(date_dir):
                             os.makedirs(date_dir)
+                        # 剪切到相关日期目录
+                        # shutil.move(src_file, date_dir)
+                        newFile = date_path + "-" + classify_num.__str__() + ".jpg"
+                        new_file = os.path.join(date_dir, newFile)
+                        shutil.move(src_file, new_file)
 
-                        shutil.move(src_file, date_dir)
-                        print("--->" + date_path + "--->" + file)
-
+                        print("--->" + file + "--->" + newFile)
                     else:
                         ignore_num = ignore_num + 1
                         print("--->获取不到图片exif信息")
                 else:
                     print("--->该文件不是jpg图片")
 
-    print("文件个数", file_num, "图片个数", pic_num, "空EXIF", ignore_num)
+    print("文件个数", file_num, "图片个数", pic_num, "分类图片数", classify_num)
 
 
 if __name__ == "__main__":
