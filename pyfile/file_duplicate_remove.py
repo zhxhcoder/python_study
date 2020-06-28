@@ -4,40 +4,35 @@ import re
 import shutil
 
 import exifread
+from PIL import Image
 from tqdm import tqdm
 
 
 # get_pic_hash
 def get_pic_hash(file):
     file_info = os.stat(file)
+    # 获取长宽
+    img = Image.open(file)
+    # 获取exif信息-尤其是拍摄时间
     exif = exifread.process_file(open(file, 'rb'))
-
     if "Image DateTime" in exif:
         time = exif['Image DateTime']
     else:
-        time = "time"
-
+        time = "dateTime"
     if "EXIF DateTimeOriginal" in exif:
         originalTime = exif['EXIF DateTimeOriginal']
     else:
-        originalTime = "shotTime"
-
+        originalTime = "originTime"
     if "Image XResolution" in exif:
         xsolution = exif['Image XResolution']
     else:
         xsolution = "xx"
-
-    if "Image ImageWidth" in exif:
-        width = exif['Image ImageWidth']
+    if "Image YResolution" in exif:
+        ysolution = exif['Image YResolution']
     else:
-        width = "ww"
+        ysolution = "yy"
 
-    if "Image ImageLength" in exif:
-        length = exif['Image ImageLength']
-    else:
-        length = "ll"
-
-    return file_info.st_size.__str__() + "/" + originalTime.__str__() + "/" + time.__str__() + "/" + xsolution.__str__() + "/" + length.__str__() + "*" + width.__str__()
+    return file_info.st_size.__str__() + "/" + img.size.__str__() + "/" + originalTime.__str__() + "/" + time.__str__() + "/" + xsolution.__str__() + "*" + ysolution.__str__()
 
 
 def get_time_second(timestamp):
