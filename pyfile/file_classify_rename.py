@@ -41,7 +41,7 @@ def classify_pic_by_exif():
                         classify_num = classify_num + 1
                         # 只处理能获取到拍摄时间的文件
                         date_path = str_time[0:10].replace(":", "")
-                        date_dir = os.path.join(dst_dir, date_path)
+                        date_dir = os.path.join(dst_dir, date_path[0:4] + "-" + date_path[4:6])
                         # 按日期建立目录
                         if not os.path.exists(date_dir):
                             os.makedirs(date_dir)
