@@ -16,7 +16,10 @@ def get_pic_hash(file, hasExif):
 
     if hasExif:
         # 获取exif信息-尤其是拍摄时间
-        exif = exifread.process_file(open(file, 'rb'))
+        try:
+            exif = exifread.process_file(open(file, 'rb'))
+        except:
+            exif = {}
         if "Image DateTime" in exif:
             time = exif['Image DateTime']
         else:
@@ -68,8 +71,10 @@ def strip_duplicate_pic():
 
                 if re.search(r'\.jpg$', file) is not None:
                     src_file = os.path.join(root, file)
-
-                    exif = exifread.process_file(open(src_file, 'rb'))
+                    try:
+                        exif = exifread.process_file(open(src_file, 'rb'))
+                    except:
+                        exif = {}
                     if "Image DateTime" in exif:
                         time = exif['Image DateTime']
                     else:
