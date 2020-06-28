@@ -27,16 +27,20 @@ def get_time_second(timestamp):
 def strip_duplicate_file():
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/_分类备份/照片/jpg")
     file_set = set()
+    file_num = 0
+    del_num = 0
     if os.path.exists(src_dir):
         # root 所指的是当前正在遍历的这个文件夹的本身的地址
         # dirs 是一个 list，内容是该文件夹中所有的目录的名字(不包括子目录)
         # files 同样是 list, 内容是该文件夹中所有的文件(不包括子目录)
         for root, dirs, files in os.walk(src_dir):
             for file in tqdm(files):
+                file_num = file_num + 1
                 src_file = os.path.join(root, file)
                 file_hash = get_file_hash(src_file)
 
                 if file_hash in file_set:
+                    del_num = del_num + 1
                     os.remove(src_file)
 
                 file_set.add(file_hash)
@@ -44,7 +48,7 @@ def strip_duplicate_file():
                 print("--->" + file
                       + "--->" + file_hash)
 
-    print(file_set)
+    print("文件个数", file_num, "删除个数", del_num)
 
 
 if __name__ == "__main__":
