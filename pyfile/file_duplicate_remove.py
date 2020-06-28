@@ -52,14 +52,9 @@ def strip_duplicate_pic():
 
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/picTest")
     dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/duplicate")
-    sole_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/sole")
     # 建立目标目录
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
-
-    # 建立获取不到拍摄时间的图片目录
-    if not os.path.exists(sole_dir):
-        os.makedirs(sole_dir)
 
     file_set = set()
     file_num = 0
@@ -83,21 +78,18 @@ def strip_duplicate_pic():
                         originalTime = exif['EXIF DateTimeOriginal']
                     else:
                         originalTime = None
-                    # 只处理能获取到拍摄时间的文件
-                    if time is not None or originalTime is not None:
-                        file_num = file_num + 1
-                        file_hash = get_pic_hash(src_file, True)
 
-                        if file_hash in file_set:
-                            del_num = del_num + 1
-                            shutil.move(src_file, dst_dir)
-                            # os.remove(src_file)
+                    file_num = file_num + 1
+                    hasExif = time is not None or originalTime is not None
+                    file_hash = get_pic_hash(src_file, hasExif)
 
-                        file_set.add(file_hash)
-                        print("--->" + file + "--->" + file_hash)
-                    else:
-                        print("--->" + file + "--->" + get_pic_hash(src_file, False))
-                        shutil.move(src_file, sole_dir)
+                    if file_hash in file_set:
+                        del_num = del_num + 1
+                        shutil.move(src_file, dst_dir)
+                        # os.remove(src_file)
+
+                    file_set.add(file_hash)
+                    print("--->" + file + "--->" + file_hash)
 
     print("图片个数", file_num, "去重图片", del_num)
 
