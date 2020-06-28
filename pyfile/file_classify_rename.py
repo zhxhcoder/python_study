@@ -53,7 +53,6 @@ def classify_pic_by_exif():
 
                         print("--->" + file + "--->" + newFile)
                     else:
-                        ignore_num = ignore_num + 1
                         print("--->获取不到图片exif信息")
                 else:
                     print("--->该文件不是jpg图片")
