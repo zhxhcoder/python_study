@@ -9,34 +9,40 @@ from tqdm import tqdm
 
 
 # get_pic_hash
-def get_pic_hash(file):
+def get_pic_hash(file, hasExif):
     file_info = os.stat(file)
     # 获取长宽
     img = Image.open(file)
-    # 获取exif信息-尤其是拍摄时间
-    exif = exifread.process_file(open(file, 'rb'))
-    if "Image DateTime" in exif:
-        time = exif['Image DateTime']
-    else:
-        time = "dateTime"
-    if "EXIF DateTimeOriginal" in exif:
-        originalTime = exif['EXIF DateTimeOriginal']
-    else:
-        originalTime = "originTime"
-    if "Image XResolution" in exif:
-        xsolution = exif['Image XResolution']
-    else:
-        xsolution = "xx"
-    if "Image YResolution" in exif:
-        ysolution = exif['Image YResolution']
-    else:
-        ysolution = "yy"
 
-    return file_info.st_size.__str__() + "/" + img.size.__str__() + "/" + originalTime.__str__() + "/" + time.__str__() + "/" + xsolution.__str__() + "*" + ysolution.__str__()
+    if hasExif:
+        # 获取exif信息-尤其是拍摄时间
+        exif = exifread.process_file(open(file, 'rb'))
+        if "Image DateTime" in exif:
+            time = exif['Image DateTime']
+        else:
+            time = "dateTime"
+        if "EXIF DateTimeOriginal" in exif:
+            originalTime = exif['EXIF DateTimeOriginal']
+        else:
+            originalTime = "originTime"
+        if "Image XResolution" in exif:
+            xsolution = exif['Image XResolution']
+        else:
+            xsolution = "xx"
+        if "Image YResolution" in exif:
+            ysolution = exif['Image YResolution']
+        else:
+            ysolution = "yy"
+
+        return file_info.st_size.__str__() + "/" + img.size.__str__() + "/" + originalTime.__str__() + "/" + time.__str__() + "/" + xsolution.__str__() + "*" + ysolution.__str__()
+    else:
+        return file_info.st_size.__str__() + "/" + img.size.__str__() + "/" + get_time_second(file_info.st_ctime)
 
 
 def get_time_second(timestamp):
-    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d/%H:%M:%S')
+    # return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+    # 只获取当天
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
 
 
 def strip_duplicate_pic():
@@ -77,10 +83,10 @@ def strip_duplicate_pic():
                         originalTime = exif['EXIF DateTimeOriginal']
                     else:
                         originalTime = None
-
+                    # 只处理能获取到拍摄时间的文件
                     if time is not None or originalTime is not None:
                         file_num = file_num + 1
-                        file_hash = get_pic_hash(src_file)
+                        file_hash = get_pic_hash(src_file, True)
 
                         if file_hash in file_set:
                             del_num = del_num + 1
@@ -92,7 +98,8 @@ def strip_duplicate_pic():
                         print("--->" + file
                               + "--->" + file_hash)
                     else:
-                        shutil.move(src_file, sole_dir)
+                        print(get_pic_hash(src_file, False))
+                        # shutil.move(src_file, sole_dir)
 
     print("图片个数", file_num, "去重图片", del_num)
 
