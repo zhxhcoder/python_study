@@ -26,7 +26,10 @@ def classify_pic_by_exif():
 
                     str_time = ""
                     src_file = os.path.join(root, file)
-                    exif = exifread.process_file(open(src_file, 'rb'))
+                    try:
+                        exif = exifread.process_file(open(src_file, 'rb'))
+                    except:
+                        exif = {}
                     if "Image DateTime" in exif:
                         time = exif['Image DateTime']
                         str_time = time.__str__()
