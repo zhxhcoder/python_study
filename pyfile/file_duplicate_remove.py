@@ -2,7 +2,6 @@ import datetime
 import os
 import shutil
 
-from tqdm import tqdm
 
 
 # 如果大小一样且，创建时间是在同一分钟
@@ -41,7 +40,7 @@ def strip_duplicate_file():
         # dirs 是一个 list，内容是该文件夹中所有的目录的名字(不包括子目录)
         # files 同样是 list, 内容是该文件夹中所有的文件(不包括子目录)
         for root, dirs, files in os.walk(src_dir):
-            for file in tqdm(files):
+            for file in files:
                 file_num = file_num + 1
                 src_file = os.path.join(root, file)
                 file_hash = get_file_hash(src_file)
@@ -56,7 +55,7 @@ def strip_duplicate_file():
                 print("--->" + file
                       + "--->" + file_hash)
 
-    print("文件个数", file_num, "删除文件", del_num)
+    print("文件个数", file_num, "去重文件", del_num)
 
 
 if __name__ == "__main__":
