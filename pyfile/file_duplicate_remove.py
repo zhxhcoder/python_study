@@ -61,21 +61,33 @@ def strip_duplicate_pic():
         # files 同样是 list, 内容是该文件夹中所有的文件(不包括子目录)
         for root, dirs, files in os.walk(src_dir):
             for file in tqdm(files):
+
                 if re.search(r'\.jpg$', file) is not None:
-
-                    file_num = file_num + 1
                     src_file = os.path.join(root, file)
-                    file_hash = get_pic_hash(src_file)
 
-                    if file_hash in file_set:
-                        del_num = del_num + 1
-                        shutil.move(src_file, dst_dir)
-                        # os.remove(src_file)
+                    exif = exifread.process_file(open(src_file, 'rb'))
+                    if "Image DateTime" in exif:
+                        time = exif['Image DateTime']
+                    else:
+                        time = None
+                    if "EXIF DateTimeOriginal" in exif:
+                        originalTime = exif['EXIF DateTimeOriginal']
+                    else:
+                        originalTime = None
 
-                    file_set.add(file_hash)
+                    if time is not None or originalTime is not None:
+                        file_num = file_num + 1
+                        file_hash = get_pic_hash(src_file)
 
-                    print("--->" + file
-                          + "--->" + file_hash)
+                        if file_hash in file_set:
+                            del_num = del_num + 1
+                            shutil.move(src_file, dst_dir)
+                            # os.remove(src_file)
+
+                        file_set.add(file_hash)
+
+                        print("--->" + file
+                              + "--->" + file_hash)
 
     print("图片个数", file_num, "去重图片", del_num)
 
