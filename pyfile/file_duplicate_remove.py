@@ -7,23 +7,37 @@ import exifread
 from tqdm import tqdm
 
 
-# 如果大小一样且，创建时间是在同一分钟
-def is_same_pic(file1, file2):
-    file_info1 = os.stat(file1)
-    file_info2 = os.stat(file2)
-    if file_info1.st_size == file_info2.st_size and get_time_second(file_info1.st_ctime) == get_time_second(
-            file_info2.st_ctime):
-        return True
-    return False
-
-
 # get_pic_hash
 def get_pic_hash(file):
     file_info = os.stat(file)
-    img = exifread.process_file(open(file, 'rb'))
-    time = img['Image DateTime']
-    xsolution = img['Image XResolution']
-    return file_info.st_size.__str__() + "/" + time.__str__() + "/" + xsolution.__str__()
+    exif = exifread.process_file(open(file, 'rb'))
+
+    if "Image DateTime" in exif:
+        time = exif['Image DateTime']
+    else:
+        time = "time"
+
+    if "EXIF DateTimeOriginal" in exif:
+        originalTime = exif['EXIF DateTimeOriginal']
+    else:
+        originalTime = "shotTime"
+
+    if "Image XResolution" in exif:
+        xsolution = exif['Image XResolution']
+    else:
+        xsolution = "xx"
+
+    if "Image ImageWidth" in exif:
+        width = exif['Image ImageWidth']
+    else:
+        width = "ww"
+
+    if "Image ImageLength" in exif:
+        length = exif['Image ImageLength']
+    else:
+        length = "ll"
+
+    return file_info.st_size.__str__() + "/" + originalTime.__str__() + "/" + time.__str__() + "/" + xsolution.__str__() + "/" + length.__str__() + "*" + width.__str__()
 
 
 def get_time_second(timestamp):
