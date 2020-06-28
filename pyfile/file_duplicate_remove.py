@@ -45,8 +45,9 @@ def get_time_second(timestamp):
 
 
 def strip_duplicate_pic():
+    #  src_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\jpg")
+    #  dst_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\duplicate")
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/picTest")
-
     dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/duplicate")
     # 建立目标目录
     if not os.path.exists(dst_dir):
