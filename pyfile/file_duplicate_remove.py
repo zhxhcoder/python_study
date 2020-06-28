@@ -46,9 +46,9 @@ def get_time_second(timestamp):
 
 
 def strip_duplicate_pic():
-    #  src_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\jpg")
-    #  dst_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\duplicate")
-    #  sole_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\sole")
+    # src_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\jpg")
+    # dst_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\duplicate")
+    # sole_dir = os.path.abspath(r"G:\移动硬盘备份\_分类备份\照片\sole")
 
     src_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/picTest")
     dst_dir = os.path.abspath(r"/Users/xhzh/yxFiles/_pic/移动硬盘备份/duplicate")
@@ -94,12 +94,10 @@ def strip_duplicate_pic():
                             # os.remove(src_file)
 
                         file_set.add(file_hash)
-
-                        print("--->" + file
-                              + "--->" + file_hash)
+                        print("--->" + file + "--->" + file_hash)
                     else:
-                        print(get_pic_hash(src_file, False))
-                        # shutil.move(src_file, sole_dir)
+                        print("--->" + file + "--->" + get_pic_hash(src_file, False))
+                        shutil.move(src_file, sole_dir)
 
     print("图片个数", file_num, "去重图片", del_num)
 
