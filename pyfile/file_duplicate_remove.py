@@ -56,6 +56,10 @@ def strip_duplicate_pic():
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
 
+    # 建立获取不到拍摄时间的图片目录
+    if not os.path.exists(sole_dir):
+        os.makedirs(sole_dir)
+
     file_set = set()
     file_num = 0
     del_num = 0
