@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 import os
 import re
 import shutil
@@ -7,15 +8,32 @@ import exifread
 from PIL import Image
 
 
+def get_file_hash(src_file):
+    with open(src_file, 'rb') as f:
+        line = f.readline()
+        md5_hash = hashlib.md5()
+        while line:
+            md5_hash.update(line)
+            line = f.readline()
+        return md5_hash.hexdigest()
+
+
 def get_date(timestamp):
     return datetime.datetime.fromtimestamp(timestamp).strftime('%Y%m%d')
 
 
-def get_pic_hash(file, hasExif):
-    file_info = os.stat(file)
+def get_pic_hash(src_file, hasExif):
+    file_info = os.stat(src_file)
+
+    # 获取文件hash
+    try:
+        file_hash = get_file_hash(src_file)
+    except:
+        file_hash = 'file_hash'
+
     # 获取长宽
     try:
-        img = Image.open(file)
+        img = Image.open(src_file)
         img_size = img.size.__str__()
     except:
         img_size = '(img_size)'
@@ -23,7 +41,7 @@ def get_pic_hash(file, hasExif):
     if hasExif:
         # 获取exif信息-尤其是拍摄时间
         try:
-            exif = exifread.process_file(open(file, 'rb'))
+            exif = exifread.process_file(open(src_file, 'rb'))
         except:
             exif = {}
         if "Image DateTime" in exif:
@@ -43,9 +61,9 @@ def get_pic_hash(file, hasExif):
         else:
             ysolution = "yy"
 
-        return file_info.st_size.__str__() + "/" + img_size + "/" + originalTime.__str__() + "/" + time.__str__() + "/" + xsolution.__str__() + "*" + ysolution.__str__()
+        return file_hash + "/" + file_info.st_size.__str__() + "/" + img_size + "/" + originalTime.__str__() + "/" + time.__str__() + "/" + xsolution.__str__() + "*" + ysolution.__str__()
     else:
-        return file_info.st_size.__str__() + "/" + img_size + "/" + get_date(file_info.st_ctime)
+        return file_hash + "/" + file_info.st_size.__str__() + "/" + img_size + "/" + get_date(file_info.st_ctime)
 
 
 def strip_duplicate_pic(src_dir):
