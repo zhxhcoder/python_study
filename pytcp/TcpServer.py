@@ -1,43 +1,74 @@
-import time
-from socket import *
+import os
+import socket
+import threading
 
-import lighton
 
-lighton.setUP()
+def sending_file(connection):
+    try:
+        # 接收消息头
+        # file_info_size = struct.calcsize('128sl')
 
-ctrCmd = ['UP', 'DOWN', 'VIEW']
-message = "hello world"
-HOST = '192.168.43.96'
-PORT = 5555
+        head = connection.recv(1024)
 
-BUFSIZE = 1024
-ADDR = (HOST, PORT)
+        if head:
+            data = head.decode("utf-8").split(";")
+            file_name = data[1][9:]
+            file_size = data[0][15:]
 
-tcpSerSock = socket(AF_INET, SOCK_STREAM)
-tcpSerSock.bind(ADDR)
-tcpSerSock.listen(5)
+            file_new_dir = os.path.join('receive')
+            if not os.path.exists(file_new_dir):
+                os.makedirs(file_new_dir)
 
-while True:
-    tcpCliSock, addr = tcpSerSock.accept()
+            file_new_name = os.path.join(file_new_dir, file_name)
+            received_size = 0
+            # 如果文件已存在
+            if os.path.exists(file_new_name):
+                received_size = os.path.getsize(file_new_name)
 
-    time.sleep(.05)
-    data = ''
-    data = tcpCliSock.recv(BUFSIZE).decode()
+            # 发送文件大小
+            connection.send((str(received_size) + "\n").encode("utf-8"))
+            print((str(received_size) + "\n").encode("utf-8"))
+            print("start receiving file:", file_name)
 
-    print(data)
+            write_file = open(file_new_name, 'ab')
+            while not str(received_size) == file_size:
 
-    if not data:
-        print("there is no data")
-        break
+                receive_origin = connection.recv(40960)
+                if receive_origin == b"break...":
+                    break
+                receive_data = receive_origin
+                received_size += len(receive_data)
+                print(received_size)
+                write_file.write(receive_data)
 
-    if data == ctrCmd[0]:
-        lighton.ledOn()
+            if str(received_size) == file_size:
+                print("接收完成！\n")
+            else:
+                print("接收暂停！")
+            write_file.close()
 
-    if data == ctrCmd[1]:
-        lighton.ledOff()
+        connection.close()
 
-    if data == ctrCmd[2]:
-        lighton.ledOn()
-        # here I want to send String back to Android
+    except Exception as e:
+        print(e)
 
-tcpCliSock.close();
+
+if __name__ == '__main__':
+    host = socket.gethostname()
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(("192.168.42.166", 8888))
+    print("服务已启动---------------")
+    sock.listen(2)
+    address = sock.accept()[1]
+    print("客户端已连接：", address)
+
+    fileSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    fileSocket.bind(("192.168.42.166", 9999))
+    fileSocket.listen(5)
+
+    while True:
+        connection, address = fileSocket.accept()
+        print("发送文件的客户端地址：", address)
+        thread = threading.Thread(target=sending_file, args=(connection,))
+        thread.start()
