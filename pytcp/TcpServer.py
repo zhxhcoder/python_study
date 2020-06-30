@@ -3,6 +3,7 @@ import socket
 import threading
 
 
+# socket 编程
 def sending_file(connection):
     try:
         # 接收消息头
