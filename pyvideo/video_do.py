@@ -10,16 +10,16 @@ def water_mark(src_file):
 
     logo = (mp.ImageClip("watermark.png")
             .set_duration(video.duration)  # 时长
-            .resize(height=100)  # 水印高度，等比缩放
-            .margin(left=10, top=10, opacity=1)  # 水印边距和透明度
+            .resize(height=50)  # 水印高度，等比缩放
+            .margin(left=1, top=1, opacity=0.1)  # 水印边距和透明度
             .set_pos(("left", "top")))  # 水印位置
 
     result = mp.CompositeVideoClip([video, logo])
 
-    print(getFileName(src_file) + "-->开始写入水印。。。")
+    print("-->" + getFileName(src_file) + "-->开始写入水印。。。")
     # mp4文件默认用libx264编码， 比特率单位bps
     result.write_videofile(re.sub(r'\.mp4$', "_mark.mp4", src_file), codec="libx264", bitrate="10000000")
-    print(getFileName(src_file) + "-->写入水印完成")
+    print("-->" + getFileName(src_file) + "-->写入水印完成")
 
 
 def getFileName(src_file):
@@ -44,7 +44,7 @@ def traverse_file(src_dir):
                     water_mark(src_file)
 
     end = datetime.datetime.now()
-    print('耗时: %s Seconds' % (end - start))
+    print('-->耗时: %s seconds' % (end - start))
 
 
 if __name__ == "__main__":
