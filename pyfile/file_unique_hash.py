@@ -42,7 +42,7 @@ def water_mark(src_dir):
 
     print("开始写入水印。。。")
     # mp4文件默认用libx264编码， 比特率单位bps
-    result.write_videofile(re.sub(r'.{2}\.mp4', "666666.mp4", src_dir), codec="libx264", bitrate="10000000")
+    result.write_videofile(re.sub(r'\.mp4$', "_mark.mp4", src_dir), codec="libx264", bitrate="10000000")
     print("写入完成")
 
 
