@@ -5,8 +5,8 @@ import re
 import moviepy.editor as mp
 
 
-def water_mark(src_dir):
-    video = mp.VideoFileClip(src_dir)
+def water_mark(src_file):
+    video = mp.VideoFileClip(src_file)
 
     logo = (mp.ImageClip("watermark.png")
             .set_duration(video.duration)  # 时长
@@ -16,10 +16,18 @@ def water_mark(src_dir):
 
     result = mp.CompositeVideoClip([video, logo])
 
-    print("开始写入水印。。。")
+    print(getFileName(src_file) + "-->开始写入水印。。。")
     # mp4文件默认用libx264编码， 比特率单位bps
-    result.write_videofile(re.sub(r'\.mp4$', "_mark.mp4", src_dir), codec="libx264", bitrate="10000000")
-    print("写入完成")
+    result.write_videofile(re.sub(r'\.mp4$', "_mark.mp4", src_file), codec="libx264", bitrate="10000000")
+    print(getFileName(src_file) + "-->写入水印完成")
+
+
+def getFileName(src_file):
+    return re.search(r'[^/]+$', src_file).group()
+
+
+def remove_water_mark(src_dir):
+    pass
 
 
 def traverse_file(src_dir):
