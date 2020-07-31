@@ -1,34 +1,36 @@
 import smtplib
-# email 用于构建邮件内容
-from email.header import Header
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# 用于构建邮件头
+email_user = 'zhxhcoder@qq.com'
+email_password = 'zhxhcoder'
+email_send = 'mrcoder@qq.com'
 
-# 发信方的信息：发信邮箱，QQ 邮箱授权码
-from_addr = 'xxx@qq.com'
-password = '你的授权码数字'
+subject = 'subject'
 
-# 收信方邮箱
-to_addr = 'xxx@qq.com'
+msg = MIMEMultipart()
+msg['From'] = email_user
+msg['To'] = email_send
+msg['Subject'] = subject
 
-# 发信服务器
-smtp_server = 'smtp.qq.com'
+body = 'Hi there, sending this email from Python!'
+msg.attach(MIMEText(body, 'plain'))
 
-# 邮箱正文内容，第一个参数为内容，第二个参数为格式(plain 为纯文本)，第三个参数为编码
-msg = MIMEText('send by python', 'plain', 'utf-8')
+filename = 'QR.png'
+attachment = open(filename, 'rb')
 
-# 邮件头信息
-msg['From'] = Header(from_addr)
-msg['To'] = Header(to_addr)
-msg['Subject'] = Header('python test')
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(attachment.read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition', "attachment; filename= " + filename)
 
-# 开启发信服务，这里使用的是加密传输
-server = smtplib.SMTP_SSL()
-server.connect(smtp_server, 465)
-# 登录发信邮箱
-server.login(from_addr, password)
-# 发送邮件
-server.sendmail(from_addr, to_addr, msg.as_string())
-# 关闭服务器
+msg.attach(part)
+text = msg.as_string()
+server = smtplib.SMTP('smtp.qq.com', 465)
+server.starttls()
+server.login(email_user, email_password)
+
+server.sendmail(email_user, email_send, text)
 server.quit()
