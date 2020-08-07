@@ -1,3 +1,4 @@
+import configparser
 import smtplib
 from email import encoders
 from email.mime.base import MIMEBase
@@ -8,8 +9,11 @@ from email.mime.text import MIMEText
 def send_email(email_send, subject, filename, body):
     print("邮件发送中...")
 
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+
     email_user = 'mrcoder@qq.com'
-    email_password = ''
+    email_password = config.get('EMAIL', 'email_password')
 
     msg = MIMEMultipart()
     msg['From'] = email_user
