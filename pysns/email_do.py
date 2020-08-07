@@ -10,7 +10,7 @@ def send_email(email_send, subject, filename, body):
     print("邮件发送中...")
 
     config = configparser.ConfigParser()
-    config.read("config.ini")
+    config.read("../config.ini")
 
     email_user = 'mrcoder@qq.com'
     email_password = config.get('EMAIL', 'email_password')
