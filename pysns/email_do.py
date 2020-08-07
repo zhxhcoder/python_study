@@ -4,11 +4,11 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-email_user = 'zhxhcoder@qq.com'
-email_password = 'zhxhcoder'
-email_send = 'mrcoder@qq.com'
+email_user = 'mrcoder@qq.com'
+email_password = ''
+email_send = 'zhxhcoder@qq.com'
 
-subject = 'subject'
+subject = 'subjec11t'
 
 msg = MIMEMultipart()
 msg['From'] = email_user
@@ -28,9 +28,10 @@ part.add_header('Content-Disposition', "attachment; filename= " + filename)
 
 msg.attach(part)
 text = msg.as_string()
-server = smtplib.SMTP('smtp.qq.com', 465)
-server.starttls()
+server = smtplib.SMTP_SSL('smtp.qq.com', 465)
+# server.starttls()
 server.login(email_user, email_password)
 
 server.sendmail(email_user, email_send, text)
+
 server.quit()
