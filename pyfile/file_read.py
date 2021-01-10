@@ -13,9 +13,9 @@ def getFieldNum(line):
     import re
     matches = re.findall(r'\S+', line)
     if matches.__len__() == 17:
-        print("成功")
+        print(matches[1] + "输入成功")
     else:
-        print(matches.__len__())
+        print(matches)
 
 
 if __name__ == "__main__":
