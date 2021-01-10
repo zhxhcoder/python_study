@@ -11,9 +11,9 @@ def readFile(s):
 
 def getFieldNum(line):
     import re
-    matches = re.finditer(r'\S+', line)
+    matches = re.findall(r'\S+', line)
     # 打印 a 字符出现的次数
-    print(matches)
+    print(matches.__len__())
 
 
 if __name__ == "__main__":
