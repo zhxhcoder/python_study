@@ -19,4 +19,4 @@ def getFieldNum(line):
 
 
 if __name__ == "__main__":
-    readFile("/Users/xhzh/Desktop/etfbak8")
+    readFile("/Users/xhzh/Desktop/fund.txt")
