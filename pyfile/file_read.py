@@ -9,6 +9,14 @@ def readFile(s):
         f.close()
 
 
+def readFiles(s):
+    f = open(s)
+    if f is not None:
+        lines = f.readlines()
+        print(lines)
+        f.close()
+
+
 def getFieldNum(line):
     import re
     matches = re.findall(r'\S+', line)
