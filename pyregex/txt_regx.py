@@ -18,6 +18,7 @@ for index, strMatch in enumerate(listMatch):
 print("######################match#########################")
 
 m = re.match(r"(\w+)\s+(\w+)", "Isaac Newton, physicist")
+print(m)
 print(m.group())
 print(m.group(1))
 
@@ -51,8 +52,29 @@ ss = re.sub(r'\s+', '', ss)
 if ss is None:
     print('->none')
 elif ss in {"1", "0", "-1"}:
-    print("->" + "set"+ss)
+    print("->" + "set" + ss)
 elif ss != '':
     print("->" + ss)
 else:
     print('->空')
+
+print("######################match_replace#########################")
+print("######################match_replace#########################")
+
+file_str = """
+	@Override
+	public void onPageSelected(int idx) {
+		setTab(idx);
+	}
+	alertDialog.setOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                finish();
+                GeneralService.getInstance().getPorting().openJYLoginActivity();//打开普通交易登录界面
+            }
+        });
+	"""
+file_str1="	public void onPageSelected(int idx) {              public void onClick(View view) {"
+file_str2=""
+print(re.match(r".+\s+(onClick|onPageSelected)(.+)\s*{\s*$", file_str1))
